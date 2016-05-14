@@ -1,23 +1,44 @@
 'use strict';
 
-var app = require('app');
-var BrowserWindow = require('browser-window');
-var globalShortcut = require('global-shortcut');
-var configuration = require('./configuration');
-var ipc = require('ipc');
+// var app = require('app');
+// var BrowserWindow = require('browser-window');
+// var globalShortcut = require('global-shortcut');
+// var configuration = require('./configuration');
+// var ipc = require('ipc');
+
+const electron = require('electron')
+// Module to control application life.
+const app = electron.app
+// Module to create native browser window.
+const BrowserWindow = electron.BrowserWindow;
+const globalShortcut = electron.globalShortcut;
+const configuration = require('./configuration');
+var ipcMain = electron.ipcMain;
+// var ipc = require('ipc');
 
 var mainWindow = null;
 var settingsWindow = null;
 
-app.on('ready', function() {
+function createWindow () {
+  // Create the browser window.
+  mainWindow = new BrowserWindow({width: 1000, height: 800, frame:false})
 
-    mainWindow = new BrowserWindow({width: 800, height: 600, frame:false});
+  // and load the index.html of the app.
+  mainWindow.loadURL('file://' + __dirname + '/index.html')
 
-    mainWindow.loadUrl('file://' + __dirname + '/index.html');
+  // Open the DevTools.
+  mainWindow.webContents.openDevTools()
 
-    // Open the DevTools.
-    mainWindow.webContents.openDevTools()
-});
+  // Emitted when the window is closed.
+  mainWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null
+  })
+}
+
+app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -36,6 +57,6 @@ app.on('activate', function () {
   }
 })
 
-ipc.on('close-main-window', function () {
+ipcMain.on('close-main-window', function () {
     app.quit();
 });
