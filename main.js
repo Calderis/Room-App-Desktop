@@ -18,10 +18,11 @@ var ipcMain = electron.ipcMain;
 
 var mainWindow = null;
 var settingsWindow = null;
+var isFullmode = false;
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1000, height: 800, frame:false})
+  mainWindow = new BrowserWindow({width: 1000, height: 800, titleBarStyle:'hidden', transparent:true})
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html')
@@ -60,3 +61,18 @@ app.on('activate', function () {
 ipcMain.on('close-main-window', function () {
     app.quit();
 });
+ipcMain.on('fullscreen-main-window', function () {
+  if(isFullmode){
+    mainWindow.maximize();
+    isFullmode = false;
+  }
+  else {
+    mainWindow.unmaximize();
+    isFullmode = true;
+  }
+});
+ipcMain.on('minimize-main-window', function () {
+    mainWindow.minimize();
+});
+
+

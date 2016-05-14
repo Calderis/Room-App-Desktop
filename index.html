@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
   <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="ressources/css/reset.css">
     <link rel="stylesheet" type="text/css" href="ressources/css/style.css">
   </head>
@@ -13,11 +14,11 @@
     
 
     <div class="app"id="app">
-      <ul class="windowItems">
+      <!-- <ul class="windowItems">
         <a href="#" class="close" onclick="closeWindow()"></a>
-        <a href="#" class="full"></a>
-        <a href="#" class="reduce"></a>
-      </ul>
+        <a href="#" class="full" onclick="fullscreenWindow()"></a>
+        <a href="#" class="reduce" onclick="minimizeWindow()"></a>
+      </ul> -->
       <div class="menu">
         <ul>
           <li class="title">
@@ -41,18 +42,31 @@
           </li>
         </ul>
       </div>
-      <div class="video" id="videoBloc" onkeydown="spacePause(event)">
+      <div class="video" id="videoBloc" onkeydown="spacePause(event)" ondblclick="fullscreenWindow()">
         <video loop id="video" src="ressources/videos/SampleVideo_1280x720_1mb.mp4"  onclick="closeBoth()">Video Name</video>
-        <div class="bigPlay" onclick="launchVideo()"></div>
-        <a href="#" class="menuIcon" onclick="openMenu()"></a>
-        <a href="#" class="chatIcon" onclick="openChat()"></a>
-        <ul class="controls">
+        <div class="clear"></div>
+        <ul class="playlist" id="playlist">
+          <li>
+            <span class="icn" onclick="initVideo('https://www.youtube.com/watch?v=Pk5NX1UY3ig')"></span>
+            <!-- <h3>Les recettes pompettes</h3> -->
+          </li>
+          <li>
+            <span class="icn" onclick="initVideo('ressources/videos/SampleVideo_1280x720_1mb.mp4')"></span>
+          </li>
+          <li class="drop"></li>
+        </ul>
+        <div class="bigPlay" onclick="playPauseVideo()"></div>
+        <a href="#" class="menuIcon"></a>
+        <a href="#" class="chatIcon"></a>
+        <span class="menuClickZone" onclick="openMenu()"></span>
+        <span class="chatClickZone" onclick="openChat()"></span>
+        <ul class="controls" id="controls">
           <li class="controlA">
             <div class="center">
               <span class="play" id="play" onclick="playPauseVideo()"></span>
               <span class="time">
-                <span class="actual">0:04</span>
-                <span class="total">/ 0:35</span>
+                <span class="actual" id="actualTime">0:00</span>
+                <span class="total" id="totalTime">/ 0:00</span>
               </span>
             </div>
           </li>
@@ -68,12 +82,26 @@
                 </div>
                 <span class="icon" id="soundIcon" onclick="mute()"></span>
               </span>
-              <span class="fullSize" onclick="fullscreen()"></span>
+              <span class="fullSize" onclick="fullscreenWindow()"></span>
             </div>
           </li>
         </ul>
       </div>
       <div class="chat">
+        <ul id="zoneChat">
+          <li class="me">
+            <span class="msg">Hey comment vas tu ?</span>
+          </li>
+          <li class="other">
+            <span class="name">Nicolas</span>
+            <span class="msg"> super ce film hein? Je te le recommande grave, c'est vraiment génial de regarder ça en même temps n'est-ce pas? Longue vie à Room !</span>
+          </li>
+        </ul>
+        <div class="zoneChat">
+          <div class="inputChat">
+            <input type="text" placeholder="Here the chat..." onkeypress="sendMessage(event, this)" id="inputChat">
+          </div>
+        </div>
       </div>
     </div>
 
@@ -86,10 +114,17 @@
     <!-- Torrent module -->
     <!--  <script src="app/webTorrent/webTorrent.js"></script> -->
 
+    <!-- Youtube video API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <!-- Screen function -->
     <script src="ressources/script/screen.js"></script>
     <!-- Video function -->
     <script src="ressources/script/player.js"></script>
+    <!-- Youtube function -->
+    <script src="ressources/script/youtube.js"></script>
+    <!-- Chat function -->
+    <script src="ressources/script/chat.js"></script>
 
   </body>
 </html>

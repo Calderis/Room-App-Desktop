@@ -2,9 +2,11 @@ body{
 	margin:0;
 	padding:0;
 	background: #151515;
-	width:100%;
-	height:100%;
-	-webkit-app-region: drag;
+	width:100vw;
+	height:100vh;
+	-webkit-app-region: drag !important;
+	transition-duration:0.3s;
+	transition-property:all;
 }
 .app{
 	margin:0;
@@ -15,18 +17,20 @@ body{
 	background: black;
 	position: absolute;
 	overflow: hidden;
+	-webkit-user-select: none;
+	-webkit-app-region: drag !important;
 }
 /* Windows items */
 .app .windowItems{
 	position: fixed;
-	z-index:3;
-	top:10px;
-	left:10px;
+	z-index:4;
+	top:0px;
+	left:0px;
 	display: block;
-	width:60px;
+	width:100%;
 	height:12px;
 	margin:0px;
-	padding:0px;
+	padding:10px;
 }
 .app .windowItems a{
 	height:12px;
@@ -45,6 +49,72 @@ body{
 /*bf4942*/
 /*bf8e22*/
 /*1e9a31*/
+
+/* Playlist */
+.playlist{
+	height: 90px;
+	width: calc(100% - 140px);
+	position:absolute;
+	display: block;
+	background:#151515;
+	z-index:1;
+	top:-130px;
+	left:0;
+	padding:20px 70px;
+	transition-duration:0.3s;
+	transition-property:all;
+}
+.playlist.open{
+	top:0;
+}
+.playlist li{
+	height:80px;
+	width:100px;
+	display:inline-block;
+	margin:0 10px;
+	border-radius:8px;
+	position:relative;
+	background-image: url('../images/vignetteYT.png');
+	background-size:cover;
+	cursor:pointer;
+	transition-duration:0.3s;
+	transition-property:all;
+}
+.playlist li:hover{
+	transform:scale(1.05);
+}
+.playlist li h3{
+	font-family: arial;
+	font-size:0.8em;
+	position: absolute;
+	bottom:-20px;
+	left:10px;
+	color:white;
+	width:80%;
+}
+.playlist li .icn{
+	opacity: 0;
+	position: absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background-color:rgba(15,15,15,0.7);
+	background-image: url('../images/bigPlay.png');
+	background-size:50%;
+	background-position: center;
+	background-repeat: no-repeat;
+	transition-duration:0.3s;
+	transition-property:all;
+}
+.playlist li:hover .icn{opacity: 1}
+
+/* Drop */
+.playlist li.drop{
+	border:2px dashed white;
+	background:none;
+}
+
 
 /* Menu block */
 .menu{
@@ -115,6 +185,7 @@ body{
 	position:absolute;
 	top:40vh;
 	left:46vw;
+	z-index:5;
 	cursor: pointer;
 	height:128px;
 	width:128px;
@@ -129,22 +200,35 @@ body{
 .app.openChat .video .bigPlay{left:calc(46vw - 270px);}
 .app.openChat .video{width:calc(100% - 270px);}
 .app.openMenu .video{width:calc(100% - 200px);}
-.video video{
+.video video, .video iframe{
 	height:100% !important;
 	width:100% !important;
-	transition-duration:1s;
+	transition-duration:0.3s;
 	transition-property:all;
 	object-fit:cover;
 	opacity: 0.3;
 }
-.video.launched video{
+.video.launched video, .video.launched iframe{
 	opacity: 1;
 }
+
+/* Clear */
+.clear{
+	position:absolute;
+	display: block;
+	z-index:1;
+	top:0;
+	left:0;
+	height:100%;
+	width:100%;
+}
+
 /* Top icons */
 .chatIcon{
 	height:24px;
 	width:24px;
 	position: absolute;
+	z-index:3;
 	top:50px;
 	right:30px;
 	/*http://www.flaticon.com/authors/madebyoliver*/
@@ -155,11 +239,29 @@ body{
 	height:24px;
 	width:24px;
 	position: absolute;
+	z-index:3;
 	top:50px;
 	left:30px;
 	/*http://www.flaticon.com/authors/madebyoliver*/
 	background-image:url('../images/menu.png');
 	background-size: contain;
+}
+.menuClickZone, .chatClickZone{
+	top:0;
+	height:100vh;
+	position: absolute;
+	width:100px;
+	display: inline-block;
+	z-index:2;
+}
+.app.openMenu .menuClickZone, .app.openChat .chatClickZone{
+	width:0px;
+}
+.menuClickZone{
+	left:0;
+}
+.chatClickZone{
+	right:0;
 }
 /* Controls Video */
 .controls{
@@ -175,6 +277,11 @@ body{
 	font-family: arial;
 	font-weight:100;
 	font-size: 12px;
+	transition-duration:0.3s;
+	transition-property:all;
+}
+.controls.force{
+	bottom:0px;
 }
 .controls:hover{
 	animation-duration:0.3s;
@@ -209,7 +316,7 @@ body{
 	width:20%;
 }
 .controls li.controlA .center{
-	width:90px;
+	width:120px;
 	position: relative;
 }
 .controls .play{
@@ -249,7 +356,7 @@ body{
 	display: block;
 }
 .controls li.progression .load{
-	width:80%;
+	width:100%;
 	background-color:rgba(255,255,255, 0.8);
 }
 
@@ -343,18 +450,108 @@ body{
 
 /* Menu block */
 .chat{
-	width:270px;
+	width:226px;
+	padding:0 22px;
 	margin-right:-270px;
 	height:100%;
+	background-color: #151515;
+	background-image:url('../images/background-messenger.png');
+	background-size:cover;
 	display: inline-block;
+	position:relative;
 	float:right;
 	z-index:2;
-	background: #151515;
 	transition-duration:0.3s;
 	transition-property:all;
 }
 .app.openChat .chat{
 	margin-right:0px;
 }
+.chat ul{
+	display: block;
+	width:100%;
+	height: calc(100% - 40px);
+	overflow-y: auto;
+}
+.chat ul li{
+	display: block;
+	width:100%;
+	overflow: auto;
+	zoom:1;
+	margin-top:5px;
+}
+.chat ul li span.msg{
+	display: block;
+	padding:15px;
+	border-bottom-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	width:70%;
+	font-size: 0.8em;
+	cursor:default;
+	line-height: 16px;
+	font-family: arial;
+	margin-top:0px;
+	background-color:rgba(15,15,15,0.8);
+	animation-duration:0.3s;
+	animation-name: bounceMsg;
+	animation-count:1;
+}
+@keyframes bounceMsg {
+  from {
+    bottom:-54px;
+  }
+  
+  to {
+    bottom:0px;
+  }
+}
+.chat ul li span.msg:after{
+	content:"";
+}
+.chat ul li.me{
+	color:#26a8d6;
+}
+.chat ul li.other{
+	color:#c9c9c9;
+}
+.chat ul li.me span.msg{
+	float:right;
+	border:1px solid #26a8d6;
+	border-top-left-radius: 20px;
+}
+.chat ul li.other span.msg{
+	border:1px solid #c9c9c9;
+	border-top-right-radius: 20px;
+}
+.chat ul li.other .name{
+	font-family: arial;
+	font-size:0.8em;
+}
+/* Input chat */
+.zoneChat{
+	height:40px;
+	width:100%;
+	display: block;
+	position: absolute;
+	bottom:0;
+	left:0;
+}
+.zoneChat .inputChat{
+	display: block;
+	padding:10px;
+}
+.zoneChat .inputChat input{
+	height:15px;
+	width:100%;
+	outline:none;
+	border:none;
+	background:none;
+	color:white;
+	font-family: arial;
+}
+
+
+
+
 
 
