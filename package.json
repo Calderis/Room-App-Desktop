@@ -1,5 +1,16 @@
 {
   "name": "room",
   "version": "0.1.0",
-  "main": "main.js"
+  "main": "./main.js",
+  "scripts": {
+    "start": "/usr/local/lib/node_modules/electron-prebuilt/dist/Electron.app/Contents/MacOS/Electron .",
+    "package": "electron-packager ./ Room --all --out ~/Desktop/Room --version 0.30.2 --overwrite --icon=./app/icon/app-icon.icns"
+  },
+  "devDependencies": {
+    "electron-packager": "^5.0.1",
+    "electron-prebuilt": "^0.30.3"
+  },
+  "dependencies": {
+    "nconf": "^0.7.2"
+  }
 }

@@ -14,15 +14,38 @@
 
     <div class="app"id="app">
       <ul class="windowItems">
-        <a href="#" class="close"></a>
+        <a href="#" class="close" onclick="closeWindow()"></a>
         <a href="#" class="full"></a>
         <a href="#" class="reduce"></a>
       </ul>
-      <div class="chat"></div>
-      <div class="video">
-        <video autoplay loop id="video" src="ressources/videos/SampleVideo_1280x720_1mb.mp4"  onclick="closeBoth()">Video Name</video>
-        <a href="#" class="menuIcon" onclick="openChat()"></a>
-        <a href="#" class="chatIcon" onclick="openMenu()"></a>
+      <div class="menu">
+        <ul>
+          <li class="title">
+            <span class="text">Navigation</span>
+          </li>
+          <li>
+            <span class="subIcon"></span>
+            <span class="text">Lorem ipsum dolor</span>
+          </li>
+          <li>
+            <span class="subIcon"></span>
+            <span class="text">Lorem ipsum dolor</span>
+          </li>
+          <li>
+            <span class="subIcon"></span>
+            <span class="text">Lorem ipsum dolor</span>
+          </li>
+          <li>
+            <span class="subIcon"></span>
+            <span class="text">Lorem ipsum dolor</span>
+          </li>
+        </ul>
+      </div>
+      <div class="video" id="videoBloc" onkeydown="spacePause(event)">
+        <video loop id="video" src="ressources/videos/SampleVideo_1280x720_1mb.mp4"  onclick="closeBoth()">Video Name</video>
+        <div class="bigPlay" onclick="launchVideo()"></div>
+        <a href="#" class="menuIcon" onclick="openMenu()"></a>
+        <a href="#" class="chatIcon" onclick="openChat()"></a>
         <ul class="controls">
           <li class="controlA">
             <div class="center">
@@ -33,21 +56,35 @@
               </span>
             </div>
           </li>
-          <li class="progression"></li>
-          <li class="controlB"></li>
+          <li class="progression" id="progression">
+            <span class="load"></span>
+            <span class="played" id="cursor"></span>
+          </li>
+          <li class="controlB">
+            <div class="center">
+              <span class="sound">
+                <div class="slide" id="slide">
+                  <span class="max" id="soundCursor"></span>
+                </div>
+                <span class="icon" id="soundIcon" onclick="mute()"></span>
+              </span>
+              <span class="fullSize" onclick="fullscreen()"></span>
+            </div>
+          </li>
         </ul>
       </div>
-      <div class="menu"></div>
+      <div class="chat">
+      </div>
     </div>
 
 
 
 
     <!-- Include the latest version of WebTorrent -->
-    <script src="ressources/script/webtorrent.min.js"></script>
+    <!--  <script src="ressources/script/webtorrent.min.js"></script> -->
 
     <!-- Torrent module -->
-    <script src="app/webTorrent/webTorrent.js"></script>
+    <!--  <script src="app/webTorrent/webTorrent.js"></script> -->
 
     <!-- Screen function -->
     <script src="ressources/script/screen.js"></script>

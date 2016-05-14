@@ -4,6 +4,7 @@ body{
 	background: #151515;
 	width:100%;
 	height:100%;
+	-webkit-app-region: drag;
 }
 .app{
 	margin:0;
@@ -45,18 +46,55 @@ body{
 /*bf8e22*/
 /*1e9a31*/
 
-/* Chat block */
-.chat{
-	width:0px;
+/* Menu block */
+.menu{
+	width:200px;
 	height:100%;
 	display: inline-block;
 	float:left;
+	margin-left:-200px;
 	background: #151515;
 	transition-duration:0.3s;
 	transition-property:all;
 }
-.app.openChat .chat{
-	width:270px;
+.app.openMenu .menu{
+	margin-left:0px;
+}
+.menu ul{
+	width:100%;
+}
+.menu ul li{
+	padding:16px 24px;
+	border-bottom:1px solid #2b2b2b;
+	width:100%;
+	cursor:pointer;
+}
+.menu ul li:hover{
+	background:rgba(255,255,255,0.02);
+}
+.menu ul li .subIcon{
+	height:12px;
+	width:12px;
+	float:left;
+	background-image:url('../images/next.png');
+	background-size:contain;
+	margin-top:2px;
+	margin-right:12px;
+}
+.menu ul li .text{
+	color:white;
+	font-family:arial;
+	font-size:0.8em;
+}
+.menu ul li.title{
+	margin-top:40px;
+	cursor:default;
+}
+.menu ul li.title:hover{
+	background:none
+}
+.menu ul li.title .text{
+	font-size:1em;
 }
 
 /* Video Block */
@@ -72,12 +110,35 @@ body{
 	transition-duration:0.3s;
 	transition-property:all;
 }
+.video .bigPlay{
+	display: block;
+	position:absolute;
+	top:40vh;
+	left:46vw;
+	cursor: pointer;
+	height:128px;
+	width:128px;
+	background-image:url('../images/bigPlay.png');
+	background-size: contain;
+	transition-duration:0.3s;
+	transition-property:all;
+}
+.video.launched .bigPlay{
+	display: none;
+}
+.app.openChat .video .bigPlay{left:calc(46vw - 270px);}
 .app.openChat .video{width:calc(100% - 270px);}
-.app.openMenu .video{width:calc(100% - 270px);}
+.app.openMenu .video{width:calc(100% - 200px);}
 .video video{
 	height:100% !important;
 	width:100% !important;
+	transition-duration:1s;
+	transition-property:all;
 	object-fit:cover;
+	opacity: 0.3;
+}
+.video.launched video{
+	opacity: 1;
 }
 /* Top icons */
 .chatIcon{
@@ -103,7 +164,8 @@ body{
 /* Controls Video */
 .controls{
 	position: absolute;
-	bottom:30px;
+	bottom:-54px;
+	padding:24px 0px;
 	z-index:2;
 	left:0;
 	width:100%;
@@ -114,6 +176,24 @@ body{
 	font-weight:100;
 	font-size: 12px;
 }
+.controls:hover{
+	animation-duration:0.3s;
+	animation-name: showMenu;
+	animation-count:1;
+	bottom:0px;
+}
+
+@keyframes showMenu {
+  from {
+    bottom:-54px;
+  }
+  
+  to {
+    bottom:0px;
+  }
+}
+
+
 .controls li{
 	display: inline-block;
 	float:left;
@@ -123,8 +203,8 @@ body{
 .controls li .center{
 	text-align: center;
 	margin: auto;
-	background:black;
 }
+/* Play/Pause */
 .controls li.controlA{
 	width:20%;
 }
@@ -153,21 +233,118 @@ body{
 	float:right;
 }
 .controls .time .total{
-	color: #545653;
+	color: rgba(255,255,255,0.6)
 }
-.controls li.controlB{
-	width:20%;
-	background-color:red;
-}
+/* progression */
 .controls li.progression{
 	width:60%;
-
+	position: relative;
+	height:3px;
+	margin-top:8px;
+	background-color:rgba(255,255,255, 0.4);
 }
+.controls li.progression span{
+	height:3px;
+	position: absolute;
+	display: block;
+}
+.controls li.progression .load{
+	width:80%;
+	background-color:rgba(255,255,255, 0.8);
+}
+
+.controls li.progression .played{
+	width:0%;
+	background:#ff2800;
+}
+/* Video Option */
+.controls li.controlB{
+	width:20%;
+}
+.controls li.controlB .center{
+	width:100px;
+	position: relative;
+}
+.controls li.controlB .sound{
+	height:20px;
+	width:20px;
+	border-radius:30px;
+	padding:10px;
+	float:left;
+	text-align: center;
+	display:block;
+	position: relative;
+	margin-top:-10px;
+	transition-duration:0.3s;
+	transition-property:all;
+}
+.controls li.controlB .sound:hover{
+	background:rgba(0,0,0,0.4);
+	margin-top:-130px;
+	height:140px;
+}
+.controls li.controlB .sound .icon{
+	height:20px;
+	width:20px;
+	display: block;
+	background-image:url('../images/sound.png');
+	background-size: contain;
+	cursor:pointer;
+}
+.controls li.controlB .sound .icon.muted{background-image:url('../images/sound-2.png');}
+.controls li.controlB .sound .icon.levelA{background-image:url('../images/sound-3.png');}
+.controls li.controlB .sound .icon.levelB{background-image:url('../images/sound.png');}
+.controls li.controlB .sound .icon.levelC{background-image:url('../images/sound-1.png');}
+
+.controls li.controlB .sound .slide{
+	height:0px;
+	width:4px;
+	display: block;
+	position: relative;
+	background-color:rgba(255,255,255, 0.6);
+	margin-left:8px;
+	cursor: pointer;
+	transition-duration:0.3s;
+	transition-property:all;
+}
+.controls li.controlB .sound:hover .slide{
+	height:100px;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.controls li.controlB .sound .slide .max{
+	background:#ff2800;
+	height:100%;
+	width:100%;
+	bottom:0px;
+	left:0;
+	position: absolute;
+}
+/* Full size */
+.controls li.controlB .fullSize{
+	height:20px;
+	margin-left: 30px;
+	width:20px;
+	display: block;
+	background-image:url('../images/full.png');
+	background-size: contain;
+	cursor:pointer;
+	float:left;
+	transition-duration:0.3s;
+	transition-property:all;
+}
+.controls li.controlB .fullSize:hover{
+	height:22px;
+	width:22px;
+	margin-top:-1px;
+}
+
 
 
 /* Menu block */
-.menu{
-	width:0px;
+.chat{
+	width:270px;
+	margin-right:-270px;
 	height:100%;
 	display: inline-block;
 	float:right;
@@ -176,8 +353,8 @@ body{
 	transition-duration:0.3s;
 	transition-property:all;
 }
-.app.openMenu .menu{
-	width:270px;
+.app.openChat .chat{
+	margin-right:0px;
 }
 
 
