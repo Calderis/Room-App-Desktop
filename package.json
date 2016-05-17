@@ -11,6 +11,8 @@
     "electron-prebuilt": "^0.30.3"
   },
   "dependencies": {
-    "nconf": "^0.7.2"
+    "magnet-link": "^1.1.1",
+    "torrent-stream": "^1.0.3",
+    "wcjs-player": "^0.5.8"
   }
 }

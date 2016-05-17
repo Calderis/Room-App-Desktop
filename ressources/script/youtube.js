@@ -1,14 +1,9 @@
 var YTPlayer;
 
 function initYoutubeVideo(url){
-    url = url.split('watch?v=')[1];
-    console.log(url);
-    initializeYoutube(url);
-}
-
-function initializeYoutube(id){
+    Video.type = "Youtube";
     YTPlayer = new YT.Player('video', {
-        videoId: id,
+        videoId: url.split('watch?v=')[1],
         playerVars: {
             color: 'black',
             controls: '0',
@@ -20,7 +15,6 @@ function initializeYoutube(id){
             onReady: function(){
                 Video.element = YTPlayer;
                 Video.type = "Youtube";
-                Video.bloc = document.getElementById('video');
             }
         }
     });

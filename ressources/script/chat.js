@@ -4,7 +4,6 @@ var zoneChat = document.getElementById("zoneChat");
 // Enter pressed on chat input
 function sendMessage(event, input){
 	if(event.keyCode == 13) {
-		//speak(input.value);
 		speak(input.value);
 		input.value = "";
 	}

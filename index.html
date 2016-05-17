@@ -42,18 +42,26 @@
           </li>
         </ul>
       </div>
-      <div class="video" id="videoBloc" onkeydown="spacePause(event)" ondblclick="fullscreenWindow()">
-        <video loop id="video" src="ressources/videos/SampleVideo_1280x720_1mb.mp4"  onclick="closeBoth()">Video Name</video>
-        <div class="clear"></div>
+      <div class="video" id="videoBloc" ondblclick="fullscreenWindow()">
+        <!-- <video loop id="video" src=""  onclick="closeBoth()">Video Name</video> -->
+        <div id="video"></div>
+        <div class="clear">
+          
+        </div>
         <ul class="playlist" id="playlist">
-          <li>
+          <!-- <li>
             <span class="icn" onclick="initVideo('https://www.youtube.com/watch?v=Pk5NX1UY3ig')"></span>
+            <span class="close" onclick="deleteVideo(this.parentElement)">x</span>
             <!-- <h3>Les recettes pompettes</h3> -->
-          </li>
-          <li>
+          </li> -->
+          <!-- <li>
             <span class="icn" onclick="initVideo('ressources/videos/SampleVideo_1280x720_1mb.mp4')"></span>
+            <span class="close" onclick="deleteVideo(this.parentElement)">x</span>
+          </li> -->
+          <li class="drop">
+            <input type="text" placeholder="link" id="dropInput" onkeypress="addVideoLink(event, this)">
+            <h3>Add link</h3>
           </li>
-          <li class="drop"></li>
         </ul>
         <div class="bigPlay" onclick="playPauseVideo()"></div>
         <a href="#" class="menuIcon"></a>
@@ -107,22 +115,26 @@
 
 
 
-
-    <!-- Include the latest version of WebTorrent -->
-    <!--  <script src="ressources/script/webtorrent.min.js"></script> -->
-
-    <!-- Torrent module -->
-    <!--  <script src="app/webTorrent/webTorrent.js"></script> -->
+    <!-- Socket -->
+    <!-- <script src="/socket.io/socket.io.js"></script>
+    <script src="js/socket.js"></script> -->
 
     <!-- Youtube video API -->
     <script src="https://www.youtube.com/iframe_api"></script>
+    <!-- Youtube function -->
+    <script src="ressources/script/youtube.js"></script>
+
+    <!-- Classic function -->
+    <script src="ressources/script/classic.js"></script>
+
+    <!-- Torrent function -->
+    <script src="ressources/script/torrent.js"></script>
+
 
     <!-- Screen function -->
     <script src="ressources/script/screen.js"></script>
     <!-- Video function -->
     <script src="ressources/script/player.js"></script>
-    <!-- Youtube function -->
-    <script src="ressources/script/youtube.js"></script>
     <!-- Chat function -->
     <script src="ressources/script/chat.js"></script>
 

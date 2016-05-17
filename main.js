@@ -12,7 +12,6 @@ const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 const globalShortcut = electron.globalShortcut;
-const configuration = require('./configuration');
 var ipcMain = electron.ipcMain;
 // var ipc = require('ipc');
 
