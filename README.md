@@ -9,4 +9,4 @@ Simple Video player app with chat to watch video synchronously with friends
 ### Features
 - Launch youtube video
 - Stream torrent
-- All video files supported (except flv)
+- All video files supported from direct download(except flv)
