@@ -6,13 +6,30 @@
     <link rel="stylesheet" type="text/css" href="ressources/css/style.css">
   </head>
   <body>
-
-    <h2>Log</h2>
-    <div class="log"></div> -->
-
     
 
-    <div class="app"id="app">
+    <div class="login" id="login">
+      <div id="backgroundPict"></div>
+      <div class="logo"><span></span></div>
+      <div class="content">
+        <h1>Create or Join a <span>Room</span></h1>
+        <!-- <h2 onclick="login()">Test</h2> -->
+        <form class="form" submit="login(); return false">
+          <div><input id="pseudo" placeholder=""><p>Pseudo</p></div>
+
+          <div><input id="lien" placeholder="Video link" onchange="getPosterFilm(this.value)"><p>Video link</p></div>
+          <div><input id="room" placeholder="Room"><p>Room</p></div>
+          <div><input id="password" type="password" placeholder="Password"><p>Password</p></div>
+        </form>
+        <div class="moviedb"></div>
+      </div>
+    </div>
+
+
+
+
+
+    <div class="app"id="app" style="display:block">
       <!-- <ul class="windowItems">
         <a href="#" class="close" onclick="closeWindow()"></a>
         <a href="#" class="full" onclick="fullscreenWindow()"></a>
@@ -115,8 +132,11 @@
 
 
     <!-- Socket -->
-    <!-- <script src="/socket.io/socket.io.js"></script>
-    <script src="js/socket.js"></script> -->
+    <script src="http://localhost:1234/socket.io/socket.io.js"></script>
+    <script src="ressources/script/socket.js"></script>
+
+    <!-- Login function -->
+    <script src="ressources/script/login.js"></script>
 
     <!-- Youtube video API -->
     <script src="https://www.youtube.com/iframe_api"></script>

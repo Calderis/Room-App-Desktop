@@ -4,12 +4,13 @@ var torrentStream = require('torrent-stream');
 
 
 function initTorrentVideo(magnet){
-  console.log("init torrent");
+  console.log("init torrent", magnet);
   var engine = torrentStream(magnet, {
       path:"./ressources/videos/"
   });
 
   engine.on('ready', function() {
+    console.log("file ready");
       engine.files.forEach(function(file) {
           var stream = file.createReadStream();
 

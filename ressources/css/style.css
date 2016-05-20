@@ -8,6 +8,143 @@ body{
 	transition-duration:0.3s;
 	transition-property:all;
 }
+
+
+/* LOGIN */
+.login{
+	position: relative;
+	height:100%;
+	width:100%;
+	display: block;
+	overflow: hidden;
+}
+.login #backgroundPict{
+	height:100%;
+	width:100%;
+  	-webkit-mask-image: -webkit-gradient(linear, left top, left 80%, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+  	background-image: url(../images/cinema.jpg);
+  	background-position: center;
+  	background-size: cover;
+}
+.login .content{
+	position: absolute;
+	top:35%;
+	left:0;
+	height: calc(100% - 40px);
+	width: calc(100% - 40px);
+	display: block;
+	padding:20px;
+}
+.login .content h1{
+	width:100%;
+	text-align: center;
+	font-size:1em;
+	margin:none;
+	color:white;
+	font-family: arial;
+	font-weight: 100;
+	text-transform: uppercase;
+}
+.login .content h1 span{
+	display: block;
+	font-size:2.8em;
+	font-weight: 800;
+}
+.login .content h2{
+	font-size:1em;
+	color:white;
+	font-family: arial;
+}
+.login .logo{
+	position: absolute;
+	display: block;
+	height:96px;
+	width:96px;
+	border-radius: 150px;
+	top:50px;
+	left:36%;
+	background-color:rgba(255,255,255,01);
+	
+}
+.login .logo span{
+	height:56px;
+	width:56px;
+	margin:23px;
+	display: block;
+	background-image: url(../images/logo/logo-fullSize.png);
+  	background-position: center;
+  	background-size: contain;
+  	background-repeat: no-repeat;
+}
+.login .content .form{
+	padding-top:40px;
+	position: relative;
+}
+
+.login .content .form input{
+	border:none;
+	color: white;
+	background:none;
+	padding:5px 0px;
+	outline:none;
+	font-family: arial;
+	margin:20px 0;
+	font-size: 0.8em;
+	display: inline-block;
+	border-bottom:1px solid white;
+	transition-property:all;
+	transition-duration:0.3s;
+}
+.login .content .form input:focus{
+	border-bottom:1px solid red;
+}
+.login .content .form #pseudo{
+	width:100%;
+	display:block;
+}
+
+.login .content .form #pseudo + p{
+	opacity: 1;
+	color: rgba(255,255,255, 0.7);
+	font-family: arial;
+	font-size:0.8em;
+	position: absolute;
+	margin-top:-40px;
+	transition: all .3s;
+}
+
+.login .content .form #pseudo:focus + p{
+	transform: translateY(-14px);
+	font-size:0.6em;
+	opacity: 1;
+}
+.login .content .form #room{
+	width: 30%;
+}
+.login .content .form #password{
+	width: 60%;
+	float:right;
+}
+.login .content .form #lien{
+	width:100%;
+	display:block;
+}
+.login .content .moviedb{
+	background:white;
+	-webkit-mask-box-image: url(../images/logo/themoviedb.svg) 37;
+	display: block;
+	height:15px;
+	width:30%;
+	position:absolute;
+	right:20px;
+	top:300px;
+	opacity: 0.2;
+}
+
+
+
+
+/* APP */
 .app{
 	margin:0;
 	padding:0;
@@ -243,8 +380,11 @@ body{
 	object-fit:cover;
 	opacity: 0.3;
 }
-.video.launched video, .video.launched iframe, .video.lanched div#video{
+.video.launched video, .video.launched iframe, .video.launched div#video{
 	opacity: 1;
+}
+.wcp-toolbar, .wcp-toolbar, .wcp-notif, .wcp-tooltip, .wcp-titlebar{
+	display:none !important;
 }
 
 /* Clear */

@@ -16,7 +16,7 @@ function initClassicVideoFromFile(file){
 function initClassicVideoFromURL(url){
 	resetVideo();
 
-	// Using HTML5 player
+	//Using HTML5 player
 	// var vid = document.createElement("video");
 	// vid.src = url;
 	// vid.setAttribute("preload", "true");

@@ -47,18 +47,6 @@ function openControls(){
 	else controls.className = "controls";
 }
 
-// Close windows
-function closeWindow(){
-	ipcRenderer.send('close-main-window');
-}
-// Toggle fullscreen
-function fullscreenWindow(){
-	ipcRenderer.send('fullscreen-main-window');
-}
-// Toggle minimize mode
-function minimizeWindow(){
-	ipcRenderer.send('minimize-main-window');
-}
 
 
 // Delete little picture
@@ -123,6 +111,12 @@ function remove(id) {
 
 // Keypress, detect Space to pause
 document.addEventListener('keydown', function(event) {
+	if(loginMode){
+		if(event.keyCode == 13){
+			login();
+		}
+		return false;
+	}
 	// Only when input is not focused
 	if(document.activeElement.id != inputChat.id && document.activeElement.id != "dropInput"){
 		if(event.keyCode == 32) playPauseVideo();

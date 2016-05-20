@@ -11,6 +11,7 @@ const electron = require('electron')
 const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
+var electronScreen
 const globalShortcut = electron.globalShortcut;
 var ipcMain = electron.ipcMain;
 // var ipc = require('ipc');
@@ -20,8 +21,9 @@ var settingsWindow = null;
 var isFullmode = false;
 
 function createWindow () {
+  electronScreen = require('electron').screen;
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1000, height: 800, titleBarStyle:'hidden', transparent:true})
+  mainWindow = new BrowserWindow({width: 350, height: 500, titleBarStyle:'hidden', backgroundColor:"#151515", resizable : false, movable : false})
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html')
@@ -35,7 +37,7 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null
-  })
+  });
 }
 
 app.on('ready', createWindow);
@@ -47,7 +49,7 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
     app.quit();
   }
-})
+});
 
 app.on('activate', function () {
   // On OS X it's common to re-create a window in the app when the
@@ -55,23 +57,19 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow();
   }
-})
+});
 
-ipcMain.on('close-main-window', function () {
-    app.quit();
-});
-ipcMain.on('fullscreen-main-window', function () {
-  if(isFullmode){
-    mainWindow.maximize();
-    isFullmode = false;
-  }
-  else {
-    mainWindow.unmaximize();
-    isFullmode = true;
-  }
-});
-ipcMain.on('minimize-main-window', function () {
-    mainWindow.minimize();
+ipcMain.on('openApp', function () {
+  mainWindow.setResizable(true);
+  mainWindow.setMovable(true);
+
+  var display = electronScreen.getPrimaryDisplay();
+
+  var width = 1000;
+  var x = Math.round((display.workArea.width - width)/2);
+  var height = 600;
+  var y = Math.round((display.workArea.height - height)/2);
+  mainWindow.setBounds({ x: x, y: y, width: width, height: height }, true);
 });
 
 

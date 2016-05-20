@@ -10,19 +10,28 @@ function sendMessage(event, input){
 }
 // User speak
 function speak(msg){
-	if(msg == "") {
-		document.getElementById("inputChat").blur();
-		closeBoth();
-	}
-	else {
-		var li = document.createElement("li");
-		li.className = "me";
-		msg = msg.replace("\"", "'");
-		li.innerHTML = "<span class='msg'>"+msg+"</span>";
-		zoneChat.appendChild(li);
-		zoneChat.scrollTop = zoneChat.scrollHeight;
+	if(typeof msg == "string"){
+		if(msg == "") {
+			document.getElementById("inputChat").blur();
+			closeBoth();
+		}
+		else {
+			var li = document.createElement("li");
+			li.className = "me";
+			msg = msg.replace("\"", "'");
+			li.innerHTML = "<span class='msg'>"+msg+"</span>";
+			zoneChat.appendChild(li);
+			zoneChat.scrollTop = zoneChat.scrollHeight;
+
+			// Send message to other
+			socket.emit("newRoomMessage", { message : msg});
+		}
 	}
 }
+
+socket.on("receiveRoomMessage", function(data){
+	if(data.name != user.identity.firstname) receive(data.name, data.message);
+});
 
 // When receiving message
 var lastReveived = "";
