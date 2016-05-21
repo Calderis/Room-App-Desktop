@@ -18,9 +18,6 @@ const globalShortcut = electron.globalShortcut;
 var ipcMain = electron.ipcMain;
 // var ipc = require('ipc');
 
-// Report crashes to our server.
-electron.crashReporter.start();
-
 var mainWindow = null;
 var settingsWindow = null;
 var isFullmode = false;
@@ -36,13 +33,9 @@ function createWindow () {
   mainWindow.loadURL('file://' + __dirname + '/index.html')
 
 
-  if (isDev) {
-
       // Open the DevTools.
     mainWindow.webContents.openDevTools()
 
-    console.log('Running in development');
-  }
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
