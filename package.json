@@ -1,18 +1,26 @@
 {
   "name": "room",
+  "description": "",
   "version": "0.1.0",
   "main": "./main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Calderis/Room"
+  },
   "scripts": {
     "start": "electron .",
+    "test": "",
     "package": "electron-packager ./ Room --all --out ~/Desktop/Room --version 0.30.2 --overwrite --icon=./app/icon/app-icon.icns"
   },
   "devDependencies": {
-    "electron-packager": "^5.0.1",
-    "electron-prebuilt": "^0.30.3"
+    "devtron": "^1.1.2",
+    "electron-packager": "~5.0.1",
+    "electron-prebuilt": "~1.1.1"
   },
   "dependencies": {
-    "magnet-link": "^1.1.1",
-    "torrent-stream": "^1.0.3",
-    "wcjs-player": "^0.5.8"
+    "electron-is-dev": "~0.1.1",
+    "magnet-link": "~1.1.1",
+    "torrent-stream": "~1.0.3",
+    "wcjs-player": "~0.5.8"
   }
 }
