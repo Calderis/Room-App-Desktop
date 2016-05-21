@@ -54,25 +54,29 @@ function deleteVideo(element){
 	element.parentNode.removeChild(element)
 }
 
-//Add new video
-function addVideoLink(event, input){
-	if(event.keyCode == 13) {
-		if(input.value.match("youtube")) {
-			console.log("Youtube Mode");
-			Video.type = "Youtube";
-			createVignette(input.value);
-		} else if(input.value.match(".torrent")){
-			console.log("WCJS Mode");
-			Video.type = "WCJS";
-			magnetLink(input.value, function (err, link) {
-			  // you got a magnet link from a remote torrent file
-			  initTorrentVideo(link);
-			});
-		} else {
-			Video.type = "Classic";
-			createVignette(input.value);
-		}
+
+function checkAddEntry(event, input){
+	if(event.keyCode == 13){
+		addVideoLink(input.value);
 		input.value = "";
+	}
+}
+//Add new video
+function addVideoLink(link){
+	if(link.match("youtube")) {
+		console.log("Youtube Mode");
+		Video.type = "Youtube";
+		createVignette(link);
+	} else if(link.match(".torrent")){
+		console.log("WCJS Mode");
+		Video.type = "WCJS";
+		magnetLink(link, function (err, link) {
+		  // you got a magnet link from a remote torrent file
+		  initTorrentVideo(link);
+		});
+	} else {
+		Video.type = "Classic";
+		createVignette(link);
 	}
 }
 
@@ -82,12 +86,12 @@ function createVignette(link){
 	console.log(Video.type);
 	if(Video.type == "Classic"){
 		li.style.backgroundColor = "white";
-		li.style.backgroundImage = "url('ressources/images/logo/logo-fullSize.png')";
-		li.innerHTML = '<span class="icn" onclick="initClassicVideoFromURL(\''+link+'\')"></span><span class="close" onclick="deleteVideo(this.parentElement)">x</span><h3>'+cutIfTooLong(link)+'</h3>';
+		getPosterFilm(link, li);
+		li.innerHTML = '<span class="icn" onclick="initClassicVideoFromURL(\''+link+'\')"></span><span class="close" onclick="deleteVideo(this.parentElement)">x</span><h3>'+getNameFilm(link)+'</h3>';
 	} else if(Video.type == "WCJS"){
 		li.style.backgroundColor = "white";
-		li.style.backgroundImage = "url('ressources/images/logo/logo-fullSize.png')";
-		li.innerHTML = '<span class="icn" onclick="initClassicVideoFromFile(\''+link+'\')"></span><span class="close" onclick="deleteVideo(this.parentElement)">x</span><h3>'+cutIfTooLong(link)+'</h3>';
+		getPosterFilm(link, li);
+		li.innerHTML = '<span class="icn" onclick="initClassicVideoFromFile(\''+link+'\')"></span><span class="close" onclick="deleteVideo(this.parentElement)">x</span><h3>'+getNameFilm(link)+'</h3>';
 	} else if(Video.type == "Youtube"){
 		var id = link.split('watch?v=')[1];
 		li.style.backgroundImage = "url('http://img.youtube.com/vi/"+id+"/0.jpg')";
@@ -98,22 +102,75 @@ function createVignette(link){
 	console.log(li);
 }
 
-// Reduce Name
-function cutIfTooLong(word){
-	var w = word.substring(0,30);
-}
 
 // delete a div from id
 function remove(id) {
     return (elem=document.getElementById(id)).parentNode.removeChild(elem);
 }
 
+// Set focus on input brother
+function getFocus(div){
+	console.log(div.parentNode.childNodes[0].focus());
+}
+
+
+function getPosterFilm(url, div){
+	var filmName = getNameFilm(url);
+	// get walking directions from central park to the empire state building
+    api = "http://api.themoviedb.org/3/search/movie?api_key=ed9f85c76141c2976bbef8c5ba03c4e6&query=" + escape(filmName);
+
+    var request = http.get(api, function (response) {
+	    var buffer = "", 
+	        data,
+	        route;
+
+	    response.on("data", function (chunk) {
+	        buffer += chunk;
+	    }); 
+
+	    response.on("end", function (err) {
+	        data = JSON.parse(buffer);
+	        div.style.backgroundImage = "url(http://image.tmdb.org/t/p/w500"+data.results[0].poster_path+")"
+	    }); 
+	}); 
+
+}
+//getPosterFilm("http://www.cpasbien.cm/telechargement/game-of-thrones-s06e01-vostfr-hdtv.torrent");
+
+
+
+function getNameFilm(url){
+	// http://www.cpasbien.cm/telechargement/game-of-thrones-s06e01-vostfr-hdtv.torrent
+	var fileName = url.substring(url.lastIndexOf('/')+1);
+	// game-of-thrones-s06e01-vostfr-hdtv.torrent
+	fileName = fileName.replace(/\.\w*/, "");	// game-of-thrones-s06e01-vostfr-hdtv
+	fileName = fileName.replace(/\W+/g, " ");
+	// game of thrones vostfr hdtv
+	fileName = fileName.replace(/\s(vo)+\S+.*/gi, "");
+	// game of thrones
+	fileName = fileName.replace(/\s\w+\d+.*/g, "");
+	fileName = fileName.replace(/\s(hd.*)|\s(dvd.*)|\s(bd.*)/gi, "");
+	fileName = fileName.replace(/www\s|cm\s/gi, "");
+
+	fileName = checkLang(fileName);
+
+	return fileName;
+}
+
+function checkLang(film){
+	film = film.replace(/\sfrench.*/gi, ""); // french
+	film = film.replace(/\sspanish.*/gi, ""); // spanish
+	film = film.replace(/\senglish.*/gi, ""); // english
+	film = film.replace(/\sportuguese.*/gi, ""); // portuguese
+	return film
+}
+
 
 // Keypress, detect Space to pause
 document.addEventListener('keydown', function(event) {
-	if(loginMode){
+	if(login.mode){
 		if(event.keyCode == 13){
-			login();
+			login.signin();
 		}
 		return false;
 	}
@@ -140,3 +197,9 @@ document.addEventListener('keydown', function(event) {
 		openControls();
     }
 });
+
+
+// Prevent from reloading
+window.onbeforeunload = function (e) {
+	e.preventDefault()
+};

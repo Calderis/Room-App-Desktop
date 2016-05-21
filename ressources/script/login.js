@@ -1,69 +1,77 @@
 var http = require("http");
-
-var loginMode = true;
-function login(){
-	loginMode = false;
-	ipcRenderer.send('openApp');
-	document.getElementById("login").style.display = "none";
-;}
-
-
-function getPosterFilm(url){
-	var filmName = getNameFilm(url);
-	console.log(filmName);
-	// get walking directions from central park to the empire state building
-    api = "http://api.themoviedb.org/3/search/movie?api_key=ed9f85c76141c2976bbef8c5ba03c4e6&query=" + escape(filmName);
-
-    // http://image.tmdb.org/t/p/w500/8uO0gUM8aNqYLs1OsTBQiXu0fEv.jpg
-    getFilm(api);
-
-}
-//getPosterFilm("http://www.cpasbien.cm/telechargement/game-of-thrones-s06e01-vostfr-hdtv.torrent");
-function getFilm(url){
-	var request = http.get(url, function (response) {
-	    var buffer = "", 
-	        data,
-	        route;
-
-	    response.on("data", function (chunk) {
-	        buffer += chunk;
-	    }); 
-
-	    response.on("end", function (err) {
-	        data = JSON.parse(buffer);
-	        console.log(data.results);
-	        document.getElementById("backgroundPict").style.backgroundImage = "url(http://image.tmdb.org/t/p/w500"+data.results[0].poster_path+")"
-	    }); 
-	}); 
+var login = {
+	mode : true,
+	signin : function(){
+		console.log("Signin");
+		login.mode = false;
+		if(login.pseudo.childNodes[0].value == "") {
+			login.pseudo.childNodes[1].className = "alert";
+			login.mode = true;
+		}
+		if(login.room.childNodes[0].value == "") {
+			login.room.childNodes[1].className = "alert";
+			login.mode = true;
+		}
+		console.log(login.mode);
+		if(!login.mode){
+			createRoom(login.pseudo.childNodes[0].value, login.link.childNodes[0].value, login.room.childNodes[0].value, login.password.childNodes[0].value);
+		}
+	},
+	pseudo : document.getElementById("pseudo"),
+	link : document.getElementById("link"),
+	room : document.getElementById("room"),
+	password : document.getElementById("password")
 }
 
 
+// Watch for focus out on Input. If input aren't empty, let's let up label
+login.pseudo.childNodes[0].addEventListener("blur", function(){
+	setLabelOut(this);
+}, this);
+login.link.childNodes[0].addEventListener("blur", function(){
+	setLabelOut(this);
+}, this);
+login.room.childNodes[0].addEventListener("blur", function(){
+	setLabelOut(this);
+}, this);
+login.password.childNodes[0].addEventListener("blur", function(){
+	setLabelOut(this);
+}, this);
 
-
-var listFilms = ["http://www.cpasbien.cm/telechargement/game-of-thrones-s06e01-vostfr-hdtv.torrent", "David.And.Goliath.2016.FRENCH.BDRiP.x264-AViTECH.www.topanalyse.org.mkv", "Pandemic.2016.FRENCH.BDRip.x264-ViVi-www.topanalyse.org.mkv", "Arrete.Ton.Cinema.2016.FRENCH.BDRip.x264-PRiDEHD.www.topanalyse.org.mkv", "david-et-goliath-french-dvdrip-2016.torrent", "david-et-goliath-french-dvdrip-x264-2016.torrent", "le-convoi-french-dvdrip-2016.torrent", "pandemic-french-dvdrip-2016.torrent", "zootopie-french-dvdrip-2016.torrent"]
-
-function getNameFilm(url){
-	// http://www.cpasbien.cm/telechargement/game-of-thrones-s06e01-vostfr-hdtv.torrent
-	var fileName = url.substring(url.lastIndexOf('/')+1);
-	// game-of-thrones-s06e01-vostfr-hdtv.torrent
-	fileName = fileName.replace(/\.\w*/, "");
-	// game-of-thrones-s06e01-vostfr-hdtv
-	fileName = fileName.replace(/\W+/g, " ");
-	// game of thrones vostfr hdtv
-	fileName = fileName.replace(/\s(vo)+\S+.*/gi, "");
-	// game of thrones
-	fileName = fileName.replace(/\s\w+\d+.*/g, "");
-	fileName = fileName.replace(/\s(hd.*)|\s(dvd.*)|\s(bd.*)/gi, "");
-
-	fileName = checkLang(fileName);
-
-	return fileName;
+// Set label out
+function setLabelOut(div){
+	if(div.value != ""){
+		div.parentNode.childNodes[1].className = "out";
+	} else {
+		if(div.parentNode.childNodes[1].className != "alert"){
+			div.parentNode.childNodes[1].className = "";
+		}
+	}
 }
 
-function checkLang(film){
-	film = film.replace(/\sfrench.*/gi, ""); // french
-	film = film.replace(/\sspanish.*/gi, ""); // spanish
-	film = film.replace(/\senglish.*/gi, ""); // english
-	film = film.replace(/\sportuguese.*/gi, ""); // portuguese
-	return film
+// Create Room
+var createRoom = function(pseudo, link, room, password){
+    console.log("Create room");
+	socket.emit("createRoom", { pseudo : pseudo, link : link, room : room, password : password });
 }
+// Join Room
+socket.on("joinRoom", function(data){
+    console.log(data);
+    ipcRenderer.send('openApp'); // Open in full and editable size
+    document.getElementById("login").style.display = "none"; // hide login panel
+    document.getElementById("app").style.display = "block";
+
+    for(var i = 0; i<data.room.playlist.length; i++){
+        addVideoLink(data.room.playlist[i].identity.link);
+    }
+});
+
+socket.on("needLink", function(){
+    login.link.childNodes[1].className = "alert";
+    login.mode = true;
+});
+socket.on("badPassword", function(){
+    login.password.childNodes[0].value = "";
+    login.password.childNodes[1].className = "alert";
+    login.mode = true;
+});

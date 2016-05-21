@@ -15,11 +15,12 @@
         <h1>Create or Join a <span>Room</span></h1>
         <!-- <h2 onclick="login()">Test</h2> -->
         <form class="form" submit="login(); return false">
-          <div><input id="pseudo" placeholder=""><p>Pseudo</p></div>
+          <div id="pseudo"><input><p onclick="getFocus(this);">Pseudo</p></div>
 
-          <div><input id="lien" placeholder="Video link" onchange="getPosterFilm(this.value)"><p>Video link</p></div>
-          <div><input id="room" placeholder="Room"><p>Room</p></div>
-          <div><input id="password" type="password" placeholder="Password"><p>Password</p></div>
+          <div id="link"><input onchange="getPosterFilm(this.value, document.getElementById('backgroundPict'))"><p onclick="getFocus(this);">Video link</p></div>
+
+          <div id="room"><input><p onclick="getFocus(this);">Room</p></div>
+          <div id="password"><input type="password"><p onclick="getFocus(this);">Password</p></div>
         </form>
         <div class="moviedb"></div>
       </div>
@@ -29,7 +30,7 @@
 
 
 
-    <div class="app"id="app" style="display:block">
+    <div class="app" id="app" style="display:none">
       <!-- <ul class="windowItems">
         <a href="#" class="close" onclick="closeWindow()"></a>
         <a href="#" class="full" onclick="fullscreenWindow()"></a>
@@ -75,8 +76,8 @@
             <span class="close" onclick="deleteVideo(this.parentElement)">x</span>
           </li> -->
           <li class="drop">
-            <input type="text" placeholder="link" id="dropInput" onkeypress="addVideoLink(event, this)">
-            <h3>Add link</h3>
+            <input type="text" placeholder="link" id="dropInput" onkeypress="checkAddEntry(event, this)">
+            <h3 class="add">Add link</h3>
           </li>
         </ul>
         <div class="bigPlay" onclick="playPauseVideo()"></div>
@@ -113,13 +114,13 @@
       </div>
       <div class="chat">
         <ul id="zoneChat">
-          <li class="me">
+          <!-- <li class="me">
             <span class="msg">Hey comment vas tu ?</span>
           </li>
           <li class="other">
             <span class="name">Nicolas</span>
             <span class="msg"> super ce film hein? Je te le recommande grave, c'est vraiment génial de regarder ça en même temps n'est-ce pas? Longue vie à Room !</span>
-          </li>
+          </li> -->
         </ul>
         <div class="zoneChat">
           <div class="inputChat">

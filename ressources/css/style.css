@@ -81,21 +81,25 @@ body{
 	position: relative;
 }
 
+.login .content .form div{
+	margin:20px 0;
+	display: inline-block;
+}
 .login .content .form input{
 	border:none;
-	color: white;
 	background:none;
-	padding:5px 0px;
 	outline:none;
+	width:100%;
+	margin:0;
+	padding:5px 0px;
+	color: white;
 	font-family: arial;
-	margin:20px 0;
-	font-size: 0.8em;
-	display: inline-block;
 	border-bottom:1px solid white;
 	transition-property:all;
 	transition-duration:0.3s;
+	font-size: 0.8em;
 }
-.login .content .form input:focus{
+.login .content .form div input:focus{
 	border-bottom:1px solid red;
 }
 .login .content .form #pseudo{
@@ -103,20 +107,35 @@ body{
 	display:block;
 }
 
-.login .content .form #pseudo + p{
+.login .content .form p{
 	opacity: 1;
 	color: rgba(255,255,255, 0.7);
 	font-family: arial;
 	font-size:0.8em;
 	position: absolute;
-	margin-top:-40px;
+	margin-top:-20px;
 	transition: all .3s;
 }
 
-.login .content .form #pseudo:focus + p{
+.login .content .form #pseudo input:focus + p, .login .content .form #link input:focus + p, .login .content .form #room input:focus + p, .login .content .form #password input:focus + p{
 	transform: translateY(-14px);
 	font-size:0.6em;
 	opacity: 1;
+}
+.login .content .form p.out{
+	transform: translateY(-14px);
+	font-size:0.6em;
+	opacity: 1;
+}
+/* Problem login */
+.login .content .form p.alert{
+	color:red;
+}
+.login .content .form #link{
+	width:100%;
+	display:block;
+	margin-top:40px;
+	margin-bottom:0;
 }
 .login .content .form #room{
 	width: 30%;
@@ -124,10 +143,6 @@ body{
 .login .content .form #password{
 	width: 60%;
 	float:right;
-}
-.login .content .form #lien{
-	width:100%;
-	display:block;
 }
 .login .content .moviedb{
 	background:white;
@@ -220,12 +235,25 @@ body{
 .playlist li:hover{
 	transform:scale(1.05);
 }
-.playlist li h3{
+.playlist li h3:not(.add){
+	text-align: center;
+	font-family: arial;
+	font-size:0.8em;
+	position: absolute;
+	bottom:-16px;
+	left:7px;
+	border-radius: 2px;
+	background-color: red;
+	padding:3px;
+	color:white;
+	width:85%;
+}
+.playlist li h3.add{
 	font-family: arial;
 	font-size:0.8em;
 	position: absolute;
 	bottom:-20px;
-	left:10px;
+	left:7px;
 	color:white;
 	width:80%;
 }
@@ -391,7 +419,7 @@ body{
 .clear{
 	position:absolute;
 	display: block;
-	z-index:1;
+	z-index:10;
 	top:0;
 	left:0;
 	height:100%;
@@ -688,6 +716,12 @@ body{
 }
 .chat ul li.other{
 	color:#c9c9c9;
+}
+.chat ul li.system{
+	color: rgba(255,255,255,0.6);
+    font-family: arial;
+    margin: 20px 0;
+    font-size: 0.7em;
 }
 .chat ul li.me span.msg{
 	float:right;

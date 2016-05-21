@@ -29,6 +29,15 @@ function speak(msg){
 	}
 }
 
+// System message
+function system(msg){
+	var li = document.createElement("li");
+	li.className = "system";
+	li.innerHTML = "<span>"+msg+"</span>";
+	zoneChat.appendChild(li);
+	zoneChat.scrollTop = zoneChat.scrollHeight;
+}
+
 socket.on("receiveRoomMessage", function(data){
 	if(data.name != user.identity.firstname) receive(data.name, data.message);
 });
@@ -36,12 +45,14 @@ socket.on("receiveRoomMessage", function(data){
 // When receiving message
 var lastReveived = "";
 function receive(name, msg){
-	var li = document.createElement("li");
-	li.className = "other";
-	msg = msg.replace("\"", "'");
-	if(lastReveived == name) li.innerHTML = "<span class='msg'>"+msg+"</span>";
-	else li.innerHTML = "<span class='name'>"+name+"</span><span class='msg'>"+msg+"</span>";
-	lastReveived = name;
-	zoneChat.appendChild(li);
-	zoneChat.scrollTop = zoneChat.scrollHeight;
+	if( name != user.identity.name){
+		var li = document.createElement("li");
+		li.className = "other";
+		msg = msg.replace("\"", "'");
+		if(lastReveived == name) li.innerHTML = "<span class='msg'>"+msg+"</span>";
+		else li.innerHTML = "<span class='name'>"+name+"</span><span class='msg'>"+msg+"</span>";
+		lastReveived = name;
+		zoneChat.appendChild(li);
+		zoneChat.scrollTop = zoneChat.scrollHeight;
+	}
 }
