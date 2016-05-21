@@ -52,10 +52,10 @@ function setLabelOut(div){
 // Create Room
 var createRoom = function(pseudo, link, room, password){
     console.log("Create room");
-	socket.emit("createRoom", { pseudo : pseudo, link : link, room : room, password : password });
+	sync.socket.emit("createRoom", { pseudo : pseudo, link : link, room : room, password : password });
 }
 // Join Room
-socket.on("joinRoom", function(data){
+sync.socket.on("joinRoom", function(data){
     console.log(data);
     ipcRenderer.send('openApp'); // Open in full and editable size
     document.getElementById("login").style.display = "none"; // hide login panel
@@ -66,11 +66,11 @@ socket.on("joinRoom", function(data){
     }
 });
 
-socket.on("needLink", function(){
+sync.socket.on("needLink", function(){
     login.link.childNodes[1].className = "alert";
     login.mode = true;
 });
-socket.on("badPassword", function(){
+sync.socket.on("badPassword", function(){
     login.password.childNodes[0].value = "";
     login.password.childNodes[1].className = "alert";
     login.mode = true;

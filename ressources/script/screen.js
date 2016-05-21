@@ -23,6 +23,7 @@ function closeBoth(){
 // Open Chat
 function openChat(){
 	app.className = "app openChat";
+	chatIcon.className = "";
 	setTimeout(function(){
 		document.getElementById("inputChat").focus();
 	}, 330);
@@ -57,7 +58,7 @@ function deleteVideo(element){
 
 function checkAddEntry(event, input){
 	if(event.keyCode == 13){
-		addVideoLink(input.value);
+		sync.addVideoLink(input.value);
 		input.value = "";
 	}
 }
@@ -83,19 +84,16 @@ function addVideoLink(link){
 //Add new vignettes
 function createVignette(link){
 	var li = document.createElement("li");
-	console.log(Video.type);
 	if(Video.type == "Classic"){
-		li.style.backgroundColor = "white";
 		getPosterFilm(link, li);
-		li.innerHTML = '<span class="icn" onclick="initClassicVideoFromURL(\''+link+'\')"></span><span class="close" onclick="deleteVideo(this.parentElement)">x</span><h3>'+getNameFilm(link)+'</h3>';
+		li.innerHTML = '<span class="icn" onclick="sync.selectVideo(\''+Video.type+'\', \''+link+'\')"></span><span class="close" onclick="deleteVideo(this.parentElement)">x</span><h3>'+getNameFilm(link)+'</h3>';
 	} else if(Video.type == "WCJS"){
-		li.style.backgroundColor = "white";
 		getPosterFilm(link, li);
-		li.innerHTML = '<span class="icn" onclick="initClassicVideoFromFile(\''+link+'\')"></span><span class="close" onclick="deleteVideo(this.parentElement)">x</span><h3>'+getNameFilm(link)+'</h3>';
+		li.innerHTML = '<span class="icn" onclick="sync.selectVideo(\''+Video.type+'\', \''+link+'\')"></span><span class="close" onclick="deleteVideo(this.parentElement)">x</span><h3>'+getNameFilm(link)+'</h3>';
 	} else if(Video.type == "Youtube"){
 		var id = link.split('watch?v=')[1];
 		li.style.backgroundImage = "url('http://img.youtube.com/vi/"+id+"/0.jpg')";
-		li.innerHTML = '<span class="icn" onclick="initVideo(\''+link+'\')"></span><span class="close" onclick="deleteVideo(this.parentElement)">x</span>';
+		li.innerHTML = '<span class="icn" onclick="sync.selectVideo(\''+Video.type+'\', \''+link+'\')"></span><span class="close" onclick="deleteVideo(this.parentElement)">x</span>';
 	}
 	
 	playlist.insertBefore(li, playlist.childNodes[0]);
@@ -130,7 +128,8 @@ function getPosterFilm(url, div){
 
 	    response.on("end", function (err) {
 	        data = JSON.parse(buffer);
-	        div.style.backgroundImage = "url(http://image.tmdb.org/t/p/w500"+data.results[0].poster_path+")"
+	        sync.poster = "http://image.tmdb.org/t/p/w500"+data.results[0].poster_path;
+	        div.style.backgroundImage = "url("+sync.poster+")";
 	    }); 
 	}); 
 
@@ -176,7 +175,7 @@ document.addEventListener('keydown', function(event) {
 	}
 	// Only when input is not focused
 	if(document.activeElement.id != inputChat.id && document.activeElement.id != "dropInput"){
-		if(event.keyCode == 32) playPauseVideo();
+		if(event.keyCode == 32) sync.playPause();
 		else if(event.keyCode == 13){// ->
 	    	if(app.className == "app openChat") closeBoth();
 	    	else openChat();

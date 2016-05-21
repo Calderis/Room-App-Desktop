@@ -1,4 +1,5 @@
 var zoneChat = document.getElementById("zoneChat");
+var chatIcon = document.getElementById("chatIcon");
 
 
 // Enter pressed on chat input
@@ -24,7 +25,7 @@ function speak(msg){
 			zoneChat.scrollTop = zoneChat.scrollHeight;
 
 			// Send message to other
-			socket.emit("newRoomMessage", { message : msg});
+			sync.socket.emit("newRoomMessage", { message : msg});
 		}
 	}
 }
@@ -38,13 +39,14 @@ function system(msg){
 	zoneChat.scrollTop = zoneChat.scrollHeight;
 }
 
-socket.on("receiveRoomMessage", function(data){
+sync.socket.on("receiveRoomMessage", function(data){
 	if(data.name != user.identity.firstname) receive(data.name, data.message);
 });
 
 // When receiving message
 var lastReveived = "";
 function receive(name, msg){
+	console.log(name, user.identity.name);
 	if( name != user.identity.name){
 		var li = document.createElement("li");
 		li.className = "other";
@@ -54,5 +56,8 @@ function receive(name, msg){
 		lastReveived = name;
 		zoneChat.appendChild(li);
 		zoneChat.scrollTop = zoneChat.scrollHeight;
+		if(app.className != "app openChat") {
+			chatIcon.className = "alert";
+		}
 	}
 }

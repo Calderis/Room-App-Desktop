@@ -4,6 +4,9 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="ressources/css/reset.css">
     <link rel="stylesheet" type="text/css" href="ressources/css/style.css">
+    <!-- Socket -->
+    <script src="http://localhost:1234/socket.io/socket.io.js"></script>
+    <script src="ressources/script/socket.js"></script>
   </head>
   <body>
     
@@ -13,7 +16,6 @@
       <div class="logo"><span></span></div>
       <div class="content">
         <h1>Create or Join a <span>Room</span></h1>
-        <!-- <h2 onclick="login()">Test</h2> -->
         <form class="form" submit="login(); return false">
           <div id="pseudo"><input><p onclick="getFocus(this);">Pseudo</p></div>
 
@@ -39,7 +41,7 @@
       <div class="menu">
         <ul>
           <li class="title">
-            <span class="text">Navigation</span>
+            <span class="text">Menu</span>
           </li>
           <li>
             <span class="subIcon"></span>
@@ -60,35 +62,24 @@
         </ul>
       </div>
       <div class="video" id="videoBloc" ondblclick="fullscreenWindow()">
-        <!-- <video loop id="video" src=""  onclick="closeBoth()">Video Name</video> -->
+        <!-- <video loop id="video" src="">Video Name</video> -->
         <div id="video"></div>
-        <div class="clear">
-          
-        </div>
+        <div class="clear"  onclick="closeBoth()"></div>
         <ul class="playlist" id="playlist">
-          <!-- <li>
-            <span class="icn" onclick="initVideo('https://www.youtube.com/watch?v=Pk5NX1UY3ig')"></span>
-            <span class="close" onclick="deleteVideo(this.parentElement)">x</span>
-            <!-- <h3>Les recettes pompettes</h3> -->
-          </li> -->
-          <!-- <li>
-            <span class="icn" onclick="initVideo('ressources/videos/SampleVideo_1280x720_1mb.mp4')"></span>
-            <span class="close" onclick="deleteVideo(this.parentElement)">x</span>
-          </li> -->
           <li class="drop">
             <input type="text" placeholder="link" id="dropInput" onkeypress="checkAddEntry(event, this)">
             <h3 class="add">Add link</h3>
           </li>
         </ul>
-        <div class="bigPlay" onclick="playPauseVideo()"></div>
+        <div class="bigPlay" onclick="sync.playPause()"></div>
         <a href="#" class="menuIcon"></a>
-        <a href="#" class="chatIcon"></a>
+        <a href="#" id="chatIcon"></a>
         <span class="menuClickZone" onclick="openMenu()"></span>
         <span class="chatClickZone" onclick="openChat()"></span>
         <ul class="controls" id="controls">
           <li class="controlA">
             <div class="center">
-              <span class="play" id="play" onclick="playPauseVideo()"></span>
+              <span class="play" id="play" onclick="sync.playPause()"></span>
               <span class="time">
                 <span class="actual" id="actualTime">0:00</span>
                 <span class="total" id="totalTime">/ 0:00</span>
@@ -130,11 +121,6 @@
       </div>
     </div>
 
-
-
-    <!-- Socket -->
-    <script src="http://localhost:1234/socket.io/socket.io.js"></script>
-    <script src="ressources/script/socket.js"></script>
 
     <!-- Login function -->
     <script src="ressources/script/login.js"></script>
