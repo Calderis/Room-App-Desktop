@@ -8,7 +8,9 @@
 
 const electron = require('electron');
 // Module to control application life.
-const {app} = electron;
+const app = electron.app
+// Module hox permite to knox if we are in dev environnement
+
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 var electronScreen
@@ -16,9 +18,14 @@ const globalShortcut = electron.globalShortcut;
 var ipcMain = electron.ipcMain;
 // var ipc = require('ipc');
 
+// Report crashes to our server.
+electron.crashReporter.start();
+
 var mainWindow = null;
 var settingsWindow = null;
 var isFullmode = false;
+
+
 
 function createWindow () {
   electronScreen = require('electron').screen;
@@ -28,8 +35,14 @@ function createWindow () {
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html')
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+
+  if (isDev) {
+
+      // Open the DevTools.
+    mainWindow.webContents.openDevTools()
+
+    console.log('Running in development');
+  }
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
