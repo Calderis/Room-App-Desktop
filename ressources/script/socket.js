@@ -1,5 +1,5 @@
 var sync = {
-    socket : io.connect('http://localhost:1234'),
+    socket : io.connect('http://192.168.1.120:1234'),
     poster : ""
 }
 
