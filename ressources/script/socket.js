@@ -1,5 +1,5 @@
 var sync = {
-    socket : io.connect('http://192.168.1.120:1234'),
+    socket : io.connect('http://163.172.29.197:1234'),
     poster : ""
 }
 
@@ -44,6 +44,8 @@ sync.socket.on("selectVideo", function(data){
     } else if(data.type == "WCJS") {
         initClassicVideoFromFile(data.link);
     } else if(data.type == "Youtube") {
+        initVideo(link);
+    } else if(data.type == "Dailymotion") {
         initVideo(link);
     }
 });

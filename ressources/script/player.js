@@ -12,8 +12,8 @@ var soundIcon = document.getElementById('soundIcon');
 const ipcRenderer = require('electron').ipcRenderer;
 var Video = {
 	type : "Classic",
-	bloc : document.getElementById('video'),
-	element : document.getElementById('video'),
+	bloc : video,
+	element : video,
 	paused : true,
 	muted : false,
 	url : "",
@@ -27,6 +27,8 @@ function initVideo(url){
 	resetVideo();
 	if(url.match("youtube")) {
 		initYoutubeVideo(url);
+	} else if(url.match("dailymotion")) {
+		initDailymotionVideo(url);
 	} else {
 		initClassicVideoFromURL(url);
 	}
@@ -62,7 +64,9 @@ function playPauseVideo(){
 		if(Video.type == "Classic"){
 			totalTime.innerHTML = "/ " + formatTime(Video.element.duration);
 		} else if(Video.type == "Youtube"){
-			totalTime.innerHTML = "/ " + formatTime(Video.element.getDuration() );
+			totalTime.innerHTML = "/ " + formatTime(Video.element.getDuration());
+		} else if(Video.type == "Dailymotion"){
+			totalTime.innerHTML = "/ " + formatTime(Video.element.duration);
 		} else if(Video.type == "WCJS"){
 			totalTime.innerHTML = "/ " + formatTime(Video.element.length() / 1000 );
 		}
@@ -78,7 +82,11 @@ function playVideo(){
 	if(Video.type == "Classic"){
 		Video.element.play();
 	} else if(Video.type == "Youtube"){
+		console.log(Video.element);
 		Video.element.playVideo();
+	} else if(Video.type == "Dailymotion"){
+		console.log(Video.element);
+		Video.element.play();
 	} else if(Video.type == "WCJS"){
 		Video.element.play();
 	}
@@ -93,6 +101,8 @@ function pauseVideo(){
 		Video.element.pause();
 	} else if(Video.type == "Youtube"){
 		Video.element.pauseVideo();
+	} else if(Video.type == "Dailymotion"){
+		Video.element.pause();
 	} else if(Video.type == "WCJS"){
 		Video.element.pause();
 	}
@@ -114,6 +124,17 @@ function showProgression(){
 		} else if(Video.type == "Youtube"){
 			progress = (Video.element.getCurrentTime() * 100) / Video.element.getDuration();
 			actualTime.innerHTML = formatTime(Video.element.getCurrentTime());
+
+			/*
+			*
+			*
+			* NEED TO FIX DM
+			*
+			*/
+		} else if(Video.type == "Dailymotion"){
+			progress = (Video.element.getCurrentTime() * 100) / Video.element.getDuration();
+			actualTime.innerHTML = formatTime(Video.element.getCurrentTime());
+
 		} else if(Video.type == "WCJS"){
 			progress = (Video.element.time()) / (Video.element.length()/1000);
 			actualTime.innerHTML = formatTime(Video.element.time()/1000);
@@ -142,6 +163,8 @@ slide.onclick = function(e){
 		Video.element.volume = volume;
 	} else if(Video.type = "Youtube"){
 		Video.element.setVolume(volume * 100);
+	} else if(Video.type = "Dailymotion"){
+		Video.element.setVolume(volume * 100);
 	} else if(Video.type = "WCJS"){
 		Video.element.volume(volume * 2);
 	}
@@ -166,6 +189,22 @@ function mute(){
 		}
 		else {
 			Video.element.mute();
+			soundCursor.style.height = "0%";
+		}
+		volume = Video.element.getVolume()/100;
+	} else if(Video.type = "Dailymotion"){
+			/*
+			*
+			*
+			* NEED TO FIX (maybe after tests)
+			*
+			*/
+		if(Video.element.toggleMuted()) {
+			Video.element.setMuted(false);
+			soundCursor.style.height = (Video.element.getVolume()) + "%";
+		}
+		else {
+			Video.element.setMuted(true);
 			soundCursor.style.height = "0%";
 		}
 		volume = Video.element.getVolume()/100;

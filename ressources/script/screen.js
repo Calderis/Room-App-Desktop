@@ -56,17 +56,15 @@ function deleteVideo(element){
 }
 
 
-function checkAddEntry(event, input){
-	if(event.keyCode == 13){
-		sync.addVideoLink(input.value);
-		input.value = "";
-	}
-}
 //Add new video
 function addVideoLink(link){
 	if(link.match("youtube")) {
 		console.log("Youtube Mode");
 		Video.type = "Youtube";
+		createVignette(link);
+	} else if(link.match("dailymotion")) {
+		console.log("Dailymotion Mode");
+		Video.type = "Dailymotion";
 		createVignette(link);
 	} else if(link.match(".torrent")){
 		console.log("WCJS Mode");
@@ -81,6 +79,14 @@ function addVideoLink(link){
 	}
 }
 
+function checkAddEntry(event, input){
+	if(event.keyCode == 13){
+		addVideoLink(input.value);
+		input.value = "";
+	}
+}
+
+
 //Add new vignettes
 function createVignette(link){
 	var li = document.createElement("li");
@@ -93,6 +99,10 @@ function createVignette(link){
 	} else if(Video.type == "Youtube"){
 		var id = link.split('watch?v=')[1];
 		li.style.backgroundImage = "url('http://img.youtube.com/vi/"+id+"/0.jpg')";
+		li.innerHTML = '<span class="icn" onclick="sync.selectVideo(\''+Video.type+'\', \''+link+'\')"></span><span class="close" onclick="deleteVideo(this.parentElement)">x</span>';
+	} else if(Video.type == "Dailymotion"){
+		var id = getDailyMotionId(link);
+		li.style.backgroundImage = "url('http://www.dailymotion.com/thumbnail/video/"+id+"')";
 		li.innerHTML = '<span class="icn" onclick="sync.selectVideo(\''+Video.type+'\', \''+link+'\')"></span><span class="close" onclick="deleteVideo(this.parentElement)">x</span>';
 	}
 	
