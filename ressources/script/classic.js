@@ -10,6 +10,8 @@ function initClassicVideoFromFile(file){
 	Video.element = new wjs("#video").addPlayer({ autoplay: false , titleBar: "both"});
 
 	Video.element.addPlaylist(getPathVideo(file));
+
+	getPosterFilm(file, document.getElementById("webchimera"));
 }
 
 // Init Classic video with a video locally placed

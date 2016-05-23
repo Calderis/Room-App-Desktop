@@ -37,8 +37,10 @@ sync.socket.on("addVideo", function(data){
 // Selecting video
 sync.selectVideo = function(type, link){
     if(isURL(link)) sync.socket.emit("selectVideo", {type : type, link : link});
+    console.log("select video");
 }
 sync.socket.on("selectVideo", function(data){
+    console.log("video selectec", data.type);
     if(data.type == "Classic"){
         initClassicVideoFromURL(data.link);
     } else if(data.type == "WCJS") {
@@ -46,6 +48,7 @@ sync.socket.on("selectVideo", function(data){
     } else if(data.type == "Youtube") {
         initYoutubeVideo(data.link);
     }
+    showPlayPause();
 });
 
 // PlayPause video

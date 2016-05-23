@@ -97,7 +97,6 @@ function createVignette(link){
 	}
 	
 	playlist.insertBefore(li, playlist.childNodes[0]);
-	console.log(li);
 }
 
 

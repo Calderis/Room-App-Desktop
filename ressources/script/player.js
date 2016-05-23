@@ -114,6 +114,11 @@ function showProgression(){
 		
 	}, 24);
 }
+
+// Show play
+function showPlayPause(){
+	videoBloc.className = "video";
+}
 // Video bar
 progression.onclick = function(e){
 	var ratio = e.offsetX / progression.offsetWidth;
