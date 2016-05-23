@@ -10,20 +10,7 @@ once in folder ( `cd Room-Master` )
 
 `npm install`
 
-Go to node_modules/webchimera.js then modify build_electron.sh by setting the correct electron version (adapt command depending if you're doing for nwjs, mac, windows, ...)
-
-Do
-
-`sh build_electron.sh`
-
-Next, download [https://github.com/RSATom/WebChimera.js/releases/download/v.0.1.3/libvlc_2.2.1_mac.zip](https://github.com/RSATom/WebChimera.js/releases/download/v.0.1.3/libvlc_2.2.1_mac.zip)
-
-and unzip it near the /node_modules/webchimera.js/build/Release/WebChimera.js.node
-
-Then do
-
-`electron .`
-
+Do `sh deploy_dev.sh`
 
 (Note : The app is only working if you have launch RoomServer before and that the socket adress is your server adress)
 
@@ -33,7 +20,7 @@ After editing the 'deploy.sh' file with correct path (look, here we are in the C
 
 `sh deploy.sh`
 
-If after testing app (do not forget RoomServer) you have a mismatch module, it's because you do not use the same version of electron. Go back editing node_modules/webchimera.js/build_electron.sh by switching version until you find the correct one (for example, I use the 1.0.1 in dev mode and 1.1.0 in deployed mode) Then redo `sh deploy.sh`
+If after testing app (do not forget RoomServer) you have a mismatch module, it's because you do not use the same version of electron. Go back editing tmp/build_electron.sh by switching version until you find the correct one (for example, I use the 1.0.1 in dev mode and 1.1.0 in deployed mode) Then redo `sh deploy.sh`
 
 ### Features
 - Launch youtube video

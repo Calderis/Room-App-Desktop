@@ -1,3 +1,6 @@
+echo "Change webchimera version"
+cp tmp/build_electron_deploy.sh node_modules/webchimera.js/build_electron.sh
+
 echo "Build package using electron-packager"
 electron-packager . --platform=darwin --arch=all --icon=./ressources/images/logo/icon.icns  --overwrite
 
