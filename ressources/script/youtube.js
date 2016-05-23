@@ -38,4 +38,3 @@ function getQueryParams(qs) {
 
     return params;
 }
-

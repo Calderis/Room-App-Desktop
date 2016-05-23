@@ -31,11 +31,13 @@ function initClassicVideoFromURL(url){
 	Video.type = "WCJS";
 	Video.element = new wjs("#video").addPlayer({ autoplay: false,  vlcArgs: ["-vvv"]  });
 	Video.element.addPlaylist(url);
+
+	getPosterFilm(url, document.getElementById("webchimera"));
 }
 
 
 function setBackgroundPoster(link){
-	
+
 }
 
 
