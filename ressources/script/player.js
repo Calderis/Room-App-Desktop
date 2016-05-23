@@ -22,16 +22,6 @@ var Video = {
 }
 
 
-// Init video
-function initVideo(url){
-	resetVideo();
-	if(url.match("youtube")) {
-		initYoutubeVideo(url);
-	} else {
-		initClassicVideoFromURL(url);
-	}
-}
-
 // Launch Video
 function launchVideo(){
 	video.play();

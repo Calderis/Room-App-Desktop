@@ -44,7 +44,7 @@ sync.socket.on("selectVideo", function(data){
     } else if(data.type == "WCJS") {
         initClassicVideoFromFile(data.link);
     } else if(data.type == "Youtube") {
-        initVideo(link);
+        initYoutubeVideo(data.link);
     }
 });
 
