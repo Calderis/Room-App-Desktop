@@ -70,6 +70,7 @@ function playVideo(){
 	} else if(Video.type == "Youtube"){
 		Video.element.playVideo();
 	} else if(Video.type == "WCJS"){
+		document.getElementById("webchimera").style.background = "black";
 		Video.element.play();
 	}
 	play.className = "play";
@@ -105,7 +106,7 @@ function showProgression(){
 			progress = (Video.element.getCurrentTime() * 100) / Video.element.getDuration();
 			actualTime.innerHTML = formatTime(Video.element.getCurrentTime());
 		} else if(Video.type == "WCJS"){
-			progress = (Video.element.time()) / (Video.element.length()/1000);
+			progress = (Video.element.time()) / (Video.element.length()/100);
 			actualTime.innerHTML = formatTime(Video.element.time()/1000);
 		}
 		cursor.style.width = progress + "%";
