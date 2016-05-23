@@ -2,7 +2,9 @@ echo "Change webchimera version"
 cp tmp/build_electron_dev.sh node_modules/webchimera.js/build_electron.sh
 
 echo "Building webchimera"
-sh node_modules/webchimera.js/electron_build.sh
+cd node_modules/webchimera.js/
+sh build_electron.sh
+cd ../../
 
 LIBFILE=tmp/libvlc_2.2.1_mac.zip
 if [ ! -f $LIBFILE ]; then

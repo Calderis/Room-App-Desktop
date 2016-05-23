@@ -187,7 +187,7 @@ document.addEventListener('keydown', function(event) {
     }
     else if(event.keyCode == 37){ // <-
 		if(app.className == "app openMenu") closeBoth();
-    	//else openMenu();
+    	// else openMenu();
     }
     else if(event.keyCode == 38){ // top
 		openPlaylist();
