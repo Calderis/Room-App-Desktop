@@ -36,7 +36,7 @@ sync.socket.on("addVideo", function(data){
 
 // Selecting video
 sync.selectVideo = function(type, link){
-    sync.socket.emit("selectVideo", {type : type, link : link});
+    if(isURL(link)) sync.socket.emit("selectVideo", {type : type, link : link});
 }
 sync.socket.on("selectVideo", function(data){
     if(data.type == "Classic"){

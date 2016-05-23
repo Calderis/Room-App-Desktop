@@ -34,6 +34,10 @@ function initClassicVideoFromURL(url){
 }
 
 
+function setBackgroundPoster(link){
+	
+}
+
 
 function getPathVideo(video){
 	var pathArray = window.location.pathname.split( '/' );
