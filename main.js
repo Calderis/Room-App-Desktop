@@ -31,7 +31,7 @@ var isFullmode = false;
 function createWindow () {
   electronScreen = require('electron').screen;
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 350, height: 500, titleBarStyle:'hidden', backgroundColor:"#151515", resizable : true, movable : true})
+  mainWindow = new BrowserWindow({width: 350, height: 500, titleBarStyle : "hidden-inset", backgroundColor:"#151515", resizable : false, fullscreenable : false})
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html')
@@ -91,9 +91,14 @@ app.on('activate', function () {
   }
 });
 
+ipcMain.on('fullScreenMode', function(){
+  if(mainWindow.isFullScreen()) mainWindow.setFullScreen(false);
+  else mainWindow.setFullScreen(true);
+});
+
 ipcMain.on('openApp', function () {
   mainWindow.setResizable(true);
-  mainWindow.setMovable(true);
+  mainWindow.setFullScreenable(true);
 
   var display = electronScreen.getPrimaryDisplay();
 

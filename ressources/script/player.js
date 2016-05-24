@@ -9,7 +9,6 @@ var slide = document.getElementById('slide');
 var soundCursor = document.getElementById('soundCursor');
 var soundIcon = document.getElementById('soundIcon');
 
-const ipcRenderer = require('electron').ipcRenderer;
 var Video = {
 	type : "Classic",
 	bloc : document.getElementById('video'),
@@ -32,7 +31,7 @@ function launchVideo(){
 //reset current video
 function resetVideo(){
 	console.log("Reset ", Video.bloc);
-	remove("video");
+	remove("video");	
 	var div = document.createElement("div");
 	div.id = "video";
 	videoBloc.appendChild(div);

@@ -2,6 +2,7 @@ var YTPlayer;
 
 function initYoutubeVideo(url){
     console.log(url);
+    resetVideo();
     Video.type = "Youtube";
     YTPlayer = new YT.Player('video', {
         videoId: url.split('watch?v=')[1],

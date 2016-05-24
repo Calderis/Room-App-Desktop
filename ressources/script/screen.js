@@ -6,6 +6,8 @@ var dropInput = document.getElementById("dropInput");
 
 var magnetLink = require('magnet-link');
 
+const ipcRenderer = require('electron').ipcRenderer;
+
 
 // Open Menu
 function openMenu(){
@@ -161,6 +163,11 @@ function checkLang(film){
 	film = film.replace(/\senglish.*/gi, ""); // english
 	film = film.replace(/\sportuguese.*/gi, ""); // portuguese
 	return film
+}
+
+function  fullScreenMode(){
+	console.log("Send fullscreen");
+	ipcRenderer.send('fullScreenMode');
 }
 
 

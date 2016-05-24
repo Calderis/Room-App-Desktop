@@ -44,5 +44,5 @@ jspm_packages
 # Where videos are downloaded
 ressources/videos
 
-# Compiled version
-room-darwin-x64
+# Compiled versions
+buildOS

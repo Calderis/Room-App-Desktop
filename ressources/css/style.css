@@ -4,7 +4,6 @@ body{
 	background: #151515;
 	width:100vw;
 	height:100vh;
-	-webkit-app-region: drag !important;
 	transition-duration:0.3s;
 	transition-property:all;
 }
@@ -169,8 +168,6 @@ body{
 	background: black;
 	position: absolute;
 	overflow: hidden;
-	-webkit-user-select: none;
-	-webkit-app-region: drag !important;
 }
 /* Windows items */
 .app .windowItems{
