@@ -4,7 +4,7 @@ Simple Video player app with chat to watch video synchronously with friends
 
 ### Note to run it (dev mode)
 
-`git clone https://github.com/Calderis/Room`
+`git clone https://github.com/Calderis/Room-App-Desktop`
 
 once in folder ( `cd Room-Master` )
 
